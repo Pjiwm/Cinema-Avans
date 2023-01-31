@@ -2,23 +2,24 @@ import { Movie } from "./Movie";
 import { MovieScreening } from "./MovieScreening";
 
 export class MovieTicket {
-    rowNr: number;
-    seatNr: number;
-    isPremium: boolean;
-    movie: Movie;
+    private rowNr: number;
+    private seatNr: number;
+    private isPremium: boolean;
+    private movieScreening: MovieScreening;
 
     constructor(movieScreening: MovieScreening, isPremiumReservation: boolean, seatRow: number, seatNr: number) {
         this.rowNr = seatRow;
         this.seatNr = seatNr;
         this.isPremium = isPremiumReservation;
+        this.movieScreening = movieScreening;
     }
 
     public isPremiumTicket(): boolean {
         return this.isPremium;
     }
-    // TODO
+
     public getPrice(): number {
-        return 0;
+        return this.movieScreening.getPricePerSeat();
     }
 
     public toString(): string {

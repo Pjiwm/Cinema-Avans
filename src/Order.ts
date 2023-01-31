@@ -1,5 +1,6 @@
 import { MovieTicket } from "./MovieTicket";
 import { TicketExportFormat } from "./TicketExportFormat";
+import { writeFileSync } from "fs";
 
 export class Order {
     private orderNr: number;
@@ -9,20 +10,63 @@ export class Order {
     constructor(orderNr: number, isStudentOrder: boolean) {
         this.orderNr = orderNr;
         this.isStudentOrder = isStudentOrder;
+        this.movieTickets = [];
     }
 
     public getOrder(): number {
         return this.orderNr;
     }
-    // TODO
-    public addSeatReservation(x: void): void {
-    }
-    // TODO
-    public calculatePrice(): number {
-        return 0;
-    }
-    // TODO
-    public export(exportFormat: TicketExportFormat): void {
 
+    public addSeatReservation(ticket: MovieTicket): void {
+        this.movieTickets.push(ticket);
+    }
+
+    public calculatePrice(): number {
+        let totalPrice = 0;
+        let day = new Date().getDay();
+
+        // Every second ticket free
+        if (this.isStudentOrder) {
+            totalPrice += this.paidTicketsPrice();
+
+        } else if (day >= 1 && day <= 4) {
+            totalPrice += this.paidTicketsPrice();
+        } else {
+            totalPrice = this.movieTickets.map(ticket => ticket.getPrice()).reduce((a, b) => a + b, 0);
+            this.movieTickets.length >= 6 ? totalPrice *= 0.9 : totalPrice;
+        }
+
+        return totalPrice;
+    }
+
+    public export(exportFormat: TicketExportFormat): void {
+        switch (exportFormat) {
+            case TicketExportFormat.JSON:
+                writeFileSync(`tickets/${this.orderNr}.json`, JSON.stringify(this));
+                break;
+            case TicketExportFormat.PLAINTEXT:
+                writeFileSync(`tickets/${this.orderNr}.txt`, this.toString());
+                break;
+        }
+    }
+
+    private paidTicketsPrice() {
+        let premiumPrice = this.isStudentOrder ? 2 : 3;
+        let totalPrice = 0;
+        for (let i = 1; i <= this.movieTickets.length; i++) {
+            if (i % 2 == 0) {
+                if (this.movieTickets[i - 1].isPremiumTicket()) {
+                    totalPrice += premiumPrice;
+                }
+                totalPrice += this.movieTickets[i - 1].getPrice();
+            }
+        }
+        return totalPrice;
+    }
+
+    toString(): string {
+        return `==================== \n
+        Order: ${this.orderNr} Price: ${this.calculatePrice()} \nTickets: ${this.movieTickets}
+        ====================`;
     }
 }
