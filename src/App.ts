@@ -1,10 +1,8 @@
- import { Order } from "./Order";
+import { Order } from "./Order";
 import { Movie } from "./Movie";
 import { MovieScreening } from "./MovieScreening";
 import { MovieTicket } from "./MovieTicket";
 import { TicketExportFormat } from "./TicketExportFormat";
-
-console.log("Hello World 2!");
 
 let movie = new Movie("The Matrix");
 let movieScreening = new MovieScreening(movie, new Date(), 10);

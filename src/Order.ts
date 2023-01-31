@@ -1,6 +1,6 @@
 import { MovieTicket } from "./MovieTicket";
 import { TicketExportFormat } from "./TicketExportFormat";
-import { writeFileSync } from "fs";
+import { writeFileSync, mkdirSync } from "fs";
 
 export class Order {
     private orderNr: number;
@@ -40,6 +40,8 @@ export class Order {
     }
 
     public export(exportFormat: TicketExportFormat): void {
+        mkdirSync("tickets", { recursive: true });
+
         switch (exportFormat) {
             case TicketExportFormat.JSON:
                 writeFileSync(`tickets/${this.orderNr}.json`, JSON.stringify(this));
