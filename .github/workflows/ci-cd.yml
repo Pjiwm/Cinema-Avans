@@ -2,7 +2,7 @@ name: Ci-CD
 
 on:
   push:
-    branches: [main]
+    pull_request: [main]
 
 jobs:
   firebase:
