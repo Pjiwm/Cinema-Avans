@@ -1,7 +1,8 @@
 import { Movie } from "./Movie";
 
 export class MovieScreening {
-    private dateAndTime: Date;
+    // Temporary
+    public dateAndTime: Date;
     private pricePerSeat: number;
     private movie: Movie;
 
