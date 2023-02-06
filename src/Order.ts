@@ -23,16 +23,15 @@ export class Order {
 
     public calculatePrice(): number {
         let totalPrice = 0;
-        let day = new Date().getDay();
+        let day = this.movieTickets[0].getDate().getDay();
 
         // Every second ticket free
         if (this.isStudentOrder) {
             totalPrice += this.paidTicketsPrice();
-
         } else if (day >= 1 && day <= 4) {
             totalPrice += this.paidTicketsPrice();
         } else {
-            totalPrice = this.movieTickets.map(ticket => ticket.getPrice()).reduce((a, b) => a + b, 0);
+            totalPrice = this.movieTickets.map(ticket => ticket.getPrice() + (ticket.isPremiumTicket() ? 3 : 0)).reduce((a, b) => a + b, 0);
             this.movieTickets.length >= 6 ? totalPrice *= 0.9 : totalPrice;
         }
 
@@ -56,19 +55,20 @@ export class Order {
         let premiumPrice = this.isStudentOrder ? 2 : 3;
         let totalPrice = 0;
         for (let i = 1; i <= this.movieTickets.length; i++) {
-            if (i % 2 == 0) {
+            if (i % 2 != 0) {
                 if (this.movieTickets[i - 1].isPremiumTicket()) {
                     totalPrice += premiumPrice;
                 }
                 totalPrice += this.movieTickets[i - 1].getPrice();
             }
+            console.log(totalPrice)
         }
         return totalPrice;
     }
 
     toString(): string {
-        return `==================== \n
-        Order: ${this.orderNr} Price: ${this.calculatePrice()} \nTickets: ${this.movieTickets}
-        ====================`;
+        return "====================\n" +
+        `Order: ${this.orderNr} Price: ${this.calculatePrice()} \nTickets: { ${this.movieTickets} }\n` +
+        "====================";
     }
 }

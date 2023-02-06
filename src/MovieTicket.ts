@@ -23,6 +23,12 @@ export class MovieTicket {
     }
 
     public toString(): string {
-        return "Row: " + this.rowNr + " Seat: " + this.seatNr;
+        return this.rowNr + "-" + this.seatNr;
+    }
+    /**
+     * Might be temporary
+     */
+    public getDate(): Date {
+        return this.movieScreening.dateAndTime;
     }
 }

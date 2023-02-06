@@ -1,0 +1,16 @@
+name: Ci-CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  firebase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: npm ci
+      - run: npm test -- --coverage
