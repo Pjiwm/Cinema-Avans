@@ -61,7 +61,6 @@ export class Order {
                 }
                 totalPrice += this.movieTickets[i - 1].getPrice();
             }
-            console.log(totalPrice)
         }
         return totalPrice;
     }

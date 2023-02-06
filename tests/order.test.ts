@@ -35,7 +35,6 @@ describe('Order tickets', () => {
     })
 
     it('Should give the total price of 2 non students on a Sunday', () => {
-        console.log(new Date("Sunday"))
         let movieScreening = new MovieScreening(movie, new Date("2023-02-5"), 10);
         let normalOrder = new Order(1, false);
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
@@ -72,6 +71,7 @@ describe('Export Tickets', () => {
         let contents = readFileSync("tickets/6969.txt", "utf8");
         expect(contents.startsWith("===")).toBe(true)
     })
+
     it('Should export student tickets in JSON', () => {
         order.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         order.addSeatReservation(new MovieTicket(movieScreening, false, 1, 2));
