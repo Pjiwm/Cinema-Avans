@@ -3,12 +3,14 @@ import { Movie } from "./Movie";
 import { MovieScreening } from "./MovieScreening";
 import { MovieTicket } from "./MovieTicket";
 import { TicketExportFormat } from "./TicketExportFormat";
+import { StudentPricing } from "./StudentPricing";
+import { NormalPricing } from "./NormalPricing";
 
 let movie = new Movie("The Matrix");
 let movieScreening = new MovieScreening(movie, new Date(), 10);
 
-let studentOrder = new Order(1, true);
-let normalOrder = new Order(2, false);
+let studentOrder = new Order(1, new StudentPricing());
+let normalOrder = new Order(2, new NormalPricing());
 
 let studentTicket = new MovieTicket(movieScreening, false, 1, 1);
 let premiumStudentTicket = new MovieTicket(movieScreening, true, 1, 2);

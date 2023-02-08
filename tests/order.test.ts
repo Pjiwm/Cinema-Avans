@@ -4,13 +4,15 @@ import { MovieScreening } from "../src/MovieScreening";
 import { MovieTicket } from "../src/MovieTicket";
 import { TicketExportFormat } from "../src/TicketExportFormat";
 import { readFileSync } from "fs";
+import { StudentPricing } from "../src/StudentPricing";
+import { NormalPricing } from "../src/NormalPricing";
 
 describe('Order tickets', () => {
     let movie = new Movie("The Matrix");
 
     it('Should give total price of 2 students', () => {
         let movieScreening = new MovieScreening(movie, new Date(), 10);
-        let studentOrder = new Order(1, true);
+        let studentOrder = new Order(1, new StudentPricing());
         studentOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         studentOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 2));
         expect(studentOrder.calculatePrice()).toBe(10)
@@ -18,7 +20,7 @@ describe('Order tickets', () => {
 
     it('Should give total price of 3 students of which one is premium', () => {
         let movieScreening = new MovieScreening(movie, new Date(), 10);
-        let studentOrder = new Order(1, true);
+        let studentOrder = new Order(1, new StudentPricing());
         studentOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         studentOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 2));
         studentOrder.addSeatReservation(new MovieTicket(movieScreening, true, 1, 3));
@@ -27,7 +29,7 @@ describe('Order tickets', () => {
 
     it('Should give the total price of 3 non students on a Monday', () => {
         let movieScreening = new MovieScreening(movie, new Date("2023-02-6"), 10);
-        let normalOrder = new Order(1, false);
+        let normalOrder = new Order(1, new NormalPricing());
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, true, 1, 2));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, true, 1, 2));
@@ -36,7 +38,7 @@ describe('Order tickets', () => {
 
     it('Should give the total price of 2 non students on a Sunday', () => {
         let movieScreening = new MovieScreening(movie, new Date("2023-02-5"), 10);
-        let normalOrder = new Order(1, false);
+        let normalOrder = new Order(1, new NormalPricing());
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, true, 1, 2));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, true, 1, 2));
@@ -46,7 +48,7 @@ describe('Order tickets', () => {
 
     it('Should give the total price of 7 non students on a Sunday', () => {
         let movieScreening = new MovieScreening(movie, new Date("2023-02-5"), 10);
-        let normalOrder = new Order(1, false);
+        let normalOrder = new Order(1, new NormalPricing());
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 2));
         normalOrder.addSeatReservation(new MovieTicket(movieScreening, false, 1, 3));
@@ -62,7 +64,7 @@ describe('Order tickets', () => {
 describe('Export Tickets', () => {
     let movie = new Movie("The Matrix");
     let movieScreening = new MovieScreening(movie, new Date(), 10);
-    let order = new Order(6969, true);
+    let order = new Order(6969, new StudentPricing());
 
     it('Should export student tickets in plaintext', () => {
         order.addSeatReservation(new MovieTicket(movieScreening, false, 1, 1));
