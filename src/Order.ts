@@ -22,23 +22,6 @@ export class Order {
         this.movieTickets.push(ticket);
     }
 
-    // public calculatePrice(): number {
-    //     let totalPrice = 0;
-    //     let day = this.movieTickets[0].getDate().getDay();
-
-    //     // Every second ticket free
-    //     if (this.isStudentOrder) {
-    //         totalPrice += this.paidTicketsPrice();
-    //     } else if (day >= 1 && day <= 4) {
-    //         totalPrice += this.paidTicketsPrice();
-    //     } else {
-    //         totalPrice = this.movieTickets.map(ticket => ticket.getPrice() + (ticket.isPremiumTicket() ? 3 : 0)).reduce((a, b) => a + b, 0);
-    //         this.movieTickets.length >= 6 ? totalPrice *= 0.9 : totalPrice;
-    //     }
-
-    //     return totalPrice;
-    // }
-
     public calculatePrice(): number {
         return this.OrderPrice.calculatePrice(this.movieTickets);
     }
@@ -55,20 +38,6 @@ export class Order {
                 break;
         }
     }
-
-    // private paidTicketsPrice() {
-    //     let premiumPrice = this.isStudentOrder ? 2 : 3;
-    //     let totalPrice = 0;
-    //     for (let i = 1; i <= this.movieTickets.length; i++) {
-    //         if (i % 2 != 0) {
-    //             if (this.movieTickets[i - 1].isPremiumTicket()) {
-    //                 totalPrice += premiumPrice;
-    //             }
-    //             totalPrice += this.movieTickets[i - 1].getPrice();
-    //         }
-    //     }
-    //     return totalPrice;
-    // }
 
     toString(): string {
         return "====================\n" +
