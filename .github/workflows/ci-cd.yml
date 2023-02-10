@@ -1,11 +1,11 @@
 name: Ci-CD
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
-  firebase:
+  jest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
