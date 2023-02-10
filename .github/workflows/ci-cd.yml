@@ -2,7 +2,7 @@ name: Ci-CD
 
 on:
   push:
-    pull_request: [main]
+    branches: [main]
 
 jobs:
   firebase:
@@ -14,3 +14,9 @@ jobs:
           node-version: '16.x'
       - run: npm ci
       - run: npm test -- --coverage
+  qodana:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: JetBrains/qodana-action@main
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
