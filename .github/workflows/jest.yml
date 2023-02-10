@@ -14,9 +14,3 @@ jobs:
           node-version: '16.x'
       - run: npm ci
       - run: npm test -- --coverage
-  qodana:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: JetBrains/qodana-action@main
-        env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
